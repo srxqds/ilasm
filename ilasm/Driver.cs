@@ -24,11 +24,14 @@ namespace Mono.ILASM {
                         Dll,
                         Exe
                 }
-
-                public static int Main (string[] args)
-                {
-                        // Do everything in Invariant
-			System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
+#if DLL
+        public static int Generate(string[] args)
+#else
+        public static int Main (string[] args)
+#endif
+        {
+            // Do everything in Invariant
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
                         DriverMain driver = new DriverMain (args);
                         if (!driver.Run ())
@@ -36,6 +39,7 @@ namespace Mono.ILASM {
                         Report.Message ("Operation completed successfully");
                         return 0;
                 }
+
 
                 private class DriverMain {
 
